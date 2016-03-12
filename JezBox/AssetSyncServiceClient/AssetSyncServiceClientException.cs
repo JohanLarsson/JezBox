@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JezBox.AssetSyncServiceClient {
+namespace JezBox {
     /// <summary>
     /// Represents errors that occur during AssetSync service client execution.
     /// The Data dictionary will have an "AssetSyncServiceClientErrorType" entry indicating the type of exception error

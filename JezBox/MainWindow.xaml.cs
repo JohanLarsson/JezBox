@@ -1,5 +1,4 @@
-﻿using JezBox.AssetSyncServiceClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +26,7 @@ namespace JezBox
         }
 
         private async void button_Click(object sender, RoutedEventArgs e) {
-            var client = AssetSyncServiceClientFactory.GetAssetSyncServiceClient();
-            client.Initialize("http://xxx");
+            var client = AssetSyncServiceClientFactory.Client;
             bool result;
             try {
                 result = await client.PingServiceAsync();

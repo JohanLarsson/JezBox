@@ -63,8 +63,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AssetSyncServiceClient\AssetSyncServiceClientException.cs" />
+    <Compile Include="AssetSyncServiceClient\AssetSyncServiceClientSettings.cs" />
     <Compile Include="AssetSyncServiceClient\IAssetSyncServiceClient.cs" />
     <Compile Include="AssetSyncServiceClient\Implementation\AssetSyncServiceClient.cs" />
+    <Compile Include="AssetSyncServiceClient\Implementation\AssetSyncServiceClientErrorType.cs" />
     <Compile Include="AssetSyncServiceClient\Implementation\AssetSyncServiceClientFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
