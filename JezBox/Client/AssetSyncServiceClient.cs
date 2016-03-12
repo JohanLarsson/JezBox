@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -22,10 +23,21 @@ namespace JezBox
             }
         }
 
-        public Task<string> GetStringAsync(string requestUri)
+        public async Task<bool> PingServiceAsync()
         {
-            VerifyNotDisposed();
-            return _client.GetStringAsync(requestUri);
+            try
+            {
+                var response = await _client.GetAsync("api/ping").ConfigureAwait(false);
+                if (response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void Dispose()
