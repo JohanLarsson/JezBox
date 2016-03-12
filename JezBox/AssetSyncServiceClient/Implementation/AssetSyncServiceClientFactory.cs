@@ -43,6 +43,7 @@ namespace JezBox
             /// <returns>True if successful; otherwise false.</returns>
             public async Task<bool> PingServiceAsync()
             {
+                VerifyNotDisposed();
                 try
                 {
                     HttpResponseMessage response = await _client.GetAsync("api/ping").ConfigureAwait(false);
