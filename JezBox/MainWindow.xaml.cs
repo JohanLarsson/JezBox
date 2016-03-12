@@ -29,7 +29,7 @@ namespace JezBox
             var client = AssetSyncServiceClientFactory.Client;
             bool result;
             try {
-                result = await client.PingServiceAsync();
+                result = await client.IsAlive();
             }
             catch (Exception ex) {
                 MessageBox.Show("Exception: " + ex.Message);

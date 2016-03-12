@@ -67,6 +67,7 @@
     <Compile Include="AssetSyncServiceClient\IAssetSyncServiceClient.cs" />
     <Compile Include="AssetSyncServiceClient\Implementation\AssetSyncServiceClientErrorType.cs" />
     <Compile Include="AssetSyncServiceClient\Implementation\AssetSyncServiceClientFactory.cs" />
+    <Compile Include="AssetSyncServiceClient\Implementation\SerialDisposable.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

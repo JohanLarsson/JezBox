@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -22,31 +23,39 @@ namespace JezBox
         /// </summary>
         private sealed class AssetSyncServiceClient : IAssetSyncServiceClient
         {
-            private readonly HttpClient _client;
+            private readonly AssetSyncServiceClientSettings _settings;
+            private readonly SerialDisposable<HttpClient> _client;
             private bool _disposed;
 
             public AssetSyncServiceClient(AssetSyncServiceClientSettings settings)
             {
-                _client = new HttpClient();
-                _client.BaseAddress = new Uri(settings.BaseUrl);
+                this._settings = settings;
+                _client = new SerialDisposable<HttpClient>(CreateClient(settings));
+            }
 
-                if (settings.JsonOnly)
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                }
+            public void UpdateUrl(string url)
+            {
+
+                _settings.BaseUrl = url;
+                _client.SetValue(CreateClient(_settings));
             }
 
             /// <summary>
             /// Tries to ping the web API service.
             /// </summary>
             /// <returns>True if successful; otherwise false.</returns>
-            public async Task<bool> PingServiceAsync()
+            public async Task<bool> IsAlive()
             {
                 VerifyNotDisposed();
                 try
                 {
-                    HttpResponseMessage response = await _client.GetAsync("api/ping").ConfigureAwait(false);
+                    var client = _client.Getvalue();
+                    if (client == null)
+                    {
+                        return false;
+                    }
+                    var response = await client.GetAsync("api/ping").ConfigureAwait(false);
+
                     if (response.StatusCode != HttpStatusCode.NoContent)
                     {
                         return false;
@@ -80,6 +89,19 @@ namespace JezBox
                 {
                     throw new ObjectDisposedException(this.GetType().FullName);
                 }
+            }
+
+            private HttpClient CreateClient(AssetSyncServiceClientSettings settings)
+            {
+                var client = new HttpClient { BaseAddress = new Uri(settings.BaseUrl) };
+
+                if (settings.JsonOnly)
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+
+                return client;
             }
         }
     }
