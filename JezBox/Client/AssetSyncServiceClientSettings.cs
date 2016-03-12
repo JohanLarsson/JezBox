@@ -2,8 +2,8 @@
 {
     public class AssetSyncServiceClientSettings
     {
-        public string BaseUrl { get; set; } = @"http://stackoverflow.com/";
+        public string BaseUrl { get; set; }
 
-        public bool JsonOnly { get; set; } = true;
+        public bool JsonOnly { get; set; }
     }
 }

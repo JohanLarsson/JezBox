@@ -11,8 +11,9 @@ namespace JezBox
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             var kernel = new StandardKernel();
+            kernel.Bind<AssetSyncServiceClientSettings>()
+                .ToConstant(JezBox.Properties.Settings.Default.AssetSyncServiceClientSettings);
             kernel.Bind<IAssetSyncServiceClient, AssetSyncServiceClient>()
                 .To<AssetSyncServiceClient>()
                 .InSingletonScope();

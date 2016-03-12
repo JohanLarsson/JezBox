@@ -16,7 +16,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Button Grid.Row="0"
-                Command="{Binding PingCommand}" />
+                Command="{Binding PingCommand}"
+                Content="Ping" />
         <TextBlock Grid.Row="1"
                    Text="{Binding IsAlive,
                                   StringFormat='IsAlive: {0}'}" />
