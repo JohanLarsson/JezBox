@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JezBox.AssetSyncServiceClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,21 @@ namespace JezBox
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private async void button_Click(object sender, RoutedEventArgs e) {
+            var client = AssetSyncServiceClientFactory.GetAssetSyncServiceClient();
+            client.Initialize("http://xxx");
+            bool result;
+            try {
+                result = await client.PingServiceAsync();
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Exception: " + ex.Message);
+                return;
+            }
+
+            MessageBox.Show("Result: " + result);
         }
     }
 }
