@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Ninject;
 
 namespace JezBox
 {
@@ -13,5 +8,16 @@ namespace JezBox
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var kernel = new StandardKernel();
+            kernel.Bind<IAssetSyncServiceClient, AssetSyncServiceClient>()
+                .To<AssetSyncServiceClient>()
+                .InSingletonScope();
+            var window = kernel.Get<MainWindow>();
+            window.Show();
+        }
     }
 }
